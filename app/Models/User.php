@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    #リレーションを定義：Userクラスは複数のTaskを保持する
+    public function tasks(){
+        return $this->hasMany(Task::class);
+    }
 }

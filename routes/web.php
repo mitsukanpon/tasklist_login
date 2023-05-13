@@ -19,11 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/test", [TaskController::class, "test"])->name("test");
+Route::get("/task/create", [TaskController::class, "create"])->middleware(["auth", "verified"])->name("task.create");
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::post("/task/store", [TaskController::class, "store"])->middleware(["auth", "verified"])->name("task.store");
+
+Route::get("/dashboard", [TaskController::class, "show"])->middleware(["auth", "verified"])->name("dashboard");
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
