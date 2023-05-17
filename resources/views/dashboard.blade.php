@@ -4,44 +4,39 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
                     @if (session("message"))
                         <p id="message">{{session("message")}}</p>
                     @endif
                     @if (count($tasks)>0)
-                        <table class="tasks">
-                            <tr class="column">
-                                <th class="title">タイトル</th>
-                                <th class="contents">内容</th>
-                                <th class="complete_flg">ステータス</th>
-                                <th class="due_date">期限</th>
+                        <table class="table-auto">
+                        <thead>
+                            <tr>
+                                <th>タイトル</th>
+                                <th>内容</th>
+                                <th>ステータス</th>
+                                <th>期限</th>
                             </tr>
+                        </thead>
+                        <tbody>
                             @foreach ($tasks as $task)
-                                <tr class="task">
-                                    <td class="title">{{$task->title}}</td>
-                                    <td class="contents">{{$task->contents}}</td>
+                                <tr>
+                                    <td><a href={{route("task.edit",$task->id)}}>{{$task->title}}</a></td>
+                                    <td>{{$task->contents}}</td>
                                     @if ($task->complete_flg == 0)
-                                        <td class="complete_flg">未完了</td>
+                                        <td>未完了</td>
                                     @else
-                                        <td class="complete_flg">完了</td>
+                                        <td>完了</td>
                                     @endif
-                                    <td class="due_date">{{$task->date}}</td>
+                                    <td>{{$task->due_date}}</td>
                                 </tr>
                             @endforeach
+                        </tbody>
                         </table>
                     @else
-                        <p class="nothing">登録されているタスクはありません</p>
+                        <p>登録されているタスクはありません</p>
                     @endif
                     
-                </div>
-            </div>
-        </div>
-    </div>
     <x-primary-button>
-        <a href={{route("task.create")}} class="task_create">新規タスク登録</a>
+        <a href={{route("task.create")}} class="task_create">作成</a>
     </x-primary-button>
 </x-app-layout>
